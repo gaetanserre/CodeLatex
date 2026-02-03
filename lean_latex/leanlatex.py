@@ -4,6 +4,7 @@ from pathlib import Path
 
 wd = Path(__file__).parent.resolve()
 diff_lines = 0
+dict_fig = {}
 
 
 def cli():
@@ -62,41 +63,41 @@ def find_lean_blocks(latex_content):
 
 
 def create_figure(lean_block, i, output_dir):
-    typst_content = f"""
-    #import "template.typ": *
+    if lean_block["content"] not in dict_fig:
+        typst_content = f"""
+#import "template.typ": *
 
-    #show: doc => config(doc)
+#show: doc => config(doc)
 
-    #align(center, box(
-      [
+#align(center, box(
+  [
 ```lean4
 {lean_block['content']}
 ```
-      ],
-    ))
-    """
-    with open(f"{wd}/figures/lean-block-{i}.typ", "w") as f:
-        f.write(typst_content)
+  ],
+))
+      """
+        with open(f"{wd}/figures/lean-block-{i}.typ", "w") as f:
+            f.write(typst_content)
 
-    subprocess.run(
-        [
-            "typst",
-            "compile",
-            f"{wd}/figures/lean-block-{i}.typ",
-            f"{output_dir}/lean-block-{i}.pdf",
-        ]
-    )
+        subprocess.run(
+            [
+                "typst",
+                "compile",
+                f"{wd}/figures/lean-block-{i}.typ",
+                f"{output_dir}/lean-block-{i}.pdf",
+            ]
+        )
+
+        dict_fig[lean_block["content"]] = f"{output_dir}/lean-block-{i}.pdf"
 
 
 def insert_figure_in_latex(lines, lean_block, i):
     options = ",".join(
         [f"{key}={value}" for key, value in lean_block["options"].items()]
     )
-    graphics = (
-        f"\\includegraphics[{options}]{{figures/leanblocks/lean-block-{i}.pdf}}".split(
-            "\n"
-        )
-    )
+    fig = dict_fig[lean_block["content"]]
+    graphics = f"\\includegraphics[{options}]{{{fig}}}".split("\n")
     global diff_lines
 
     lines[lean_block["start"] - diff_lines : lean_block["end"] + 1 - diff_lines] = (
@@ -122,6 +123,11 @@ def main():
         latex_content = f.read()
     lean_blocks, lines = find_lean_blocks(latex_content)
     output_dir = Path(args.doc).parent.resolve() / "figures" / "leanblocks"
+    # delete all existing files in output_dir
+    if output_dir.exists():
+        for file in output_dir.iterdir():
+            file.unlink()
+        output_dir.rmdir()
     output_dir.mkdir(exist_ok=True, parents=True)
     for i, lean_block in enumerate(lean_blocks):
         create_figure(lean_block, i, output_dir)
