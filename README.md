@@ -43,6 +43,18 @@ It will generate `your_document.tex_processed.tex` with the Lean code replaced b
 
 It is easy to create a custom LaTeX command to include the processed file in your main document.
 
+#### Font size option
+
+You can specify a custom font size for the generated graphics by adding the `fontsize` option to the `leancode` environment. For example:
+
+```latex
+\begin{leancode}[fontsize=10pt]
+...
+\end{leancode}
+```
+
+This option will be passed to the Typst template, allowing you to customize the font size of the rendered Lean code in the generated graphics.
+
 ### Customization
 You can customize the output directory for the generated graphics by modifying the Typst template in `lean_latex/figures/template.typ`.
 

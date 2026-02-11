@@ -63,11 +63,14 @@ def find_lean_blocks(latex_content):
 
 
 def create_figure(lean_block, i, output_dir):
+    font_size = lean_block["options"].get("fontsize", "7pt")
     if lean_block["content"] not in dict_fig:
         typst_content = f"""
 #import "template.typ": *
 
 #show: doc => config(doc)
+
+#show raw: set text(size: {font_size})
 
 #align(center, box(
   [
@@ -93,6 +96,9 @@ def create_figure(lean_block, i, output_dir):
 
 
 def insert_figure_in_latex(lines, lean_block, i):
+    # remove option fontsize if it exists
+    lean_block["options"].pop("fontsize", None)
+
     options = ",".join(
         [f"{key}={value}" for key, value in lean_block["options"].items()]
     )
