@@ -53,6 +53,16 @@ You can specify a custom font size for the generated graphics by adding the `fon
 \end{leancode}
 ```
 
+### Numbering option
+
+You can enable line numbering in the generated graphics by adding the `numbering` option to the `leancode` environment. For example:
+
+```latex
+\begin{leancode}[numbering=1]
+...
+\end{leancode}
+```
+
 This option will be passed to the Typst template, allowing you to customize the font size of the rendered Lean code in the generated graphics.
 
 ### Customization

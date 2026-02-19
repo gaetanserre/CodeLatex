@@ -64,6 +64,13 @@ def find_lean_blocks(latex_content):
 
 def create_figure(lean_block, i, output_dir):
     font_size = lean_block["options"].get("fontsize", "7pt")
+    numbering = bool(int(lean_block["options"].get("numbering", "0")))
+
+    if numbering:
+        show_raw_line = '#show raw.line: it => [#text(fill: rgb("#aaaaaa"), if it.count >= 10 and it.number < 10 { " " + str(it.number) } else { str(it.number) } ) #it]'
+    else:
+        show_raw_line = ""
+
     if lean_block["content"] not in dict_fig:
         typst_content = f"""
 #import "template.typ": *
@@ -71,6 +78,8 @@ def create_figure(lean_block, i, output_dir):
 #show: doc => config(doc)
 
 #show raw: set text(size: {font_size})
+
+{show_raw_line}
 
 #align(center, box(
   [
@@ -106,8 +115,8 @@ def create_figure(lean_block, i, output_dir):
 
 
 def insert_figure_in_latex(lines, lean_block, i):
-    # remove option fontsize if it exists
     lean_block["options"].pop("fontsize", None)
+    lean_block["options"].pop("numbering", None)
 
     options = ",".join(
         [f"{key}={value}" for key, value in lean_block["options"].items()]
