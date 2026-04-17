@@ -22,7 +22,7 @@ include = ["code_latex"]
 code_latex = ["figures/**"]
 
 [project.urls]
-Repository = "https://github.com/gaetanserre/lean_latex"
+Repository = "https://github.com/gaetanserre/CodeLatex"
 
 [project.scripts]
 code_latex = "code_latex.codelatex:main"
