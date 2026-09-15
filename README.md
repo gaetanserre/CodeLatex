@@ -54,6 +54,16 @@ You can specify a custom font size for the generated graphics by adding the `fon
 \end{code}
 ```
 
+#### Line spacing option
+
+The vertical space between two lines of a code block defaults to `0.35em`. You can change it per block with the `linespacing` option, which takes any Typst length:
+
+```latex
+\begin{code}{lean}[linespacing=0.3em]
+...
+\end{code}
+```
+
 ### Numbering option
 
 You can enable line numbering in the generated graphics by adding the `numbering` option to the `code` environment. For example:

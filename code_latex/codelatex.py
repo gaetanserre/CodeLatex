@@ -70,6 +70,7 @@ def find_code_blocks(latex_content):
 
 def create_figure(code_block, i, output_dir):
     font_size = code_block["options"].get("fontsize", "7pt")
+    line_spacing = code_block["options"].get("linespacing", "0.35em")
     numbering = bool(int(code_block["options"].get("numbering", "0")))
 
     if numbering:
@@ -81,7 +82,7 @@ def create_figure(code_block, i, output_dir):
         typst_content = f"""
 #import "template.typ": *
 
-#show: doc => config(doc)
+#show: doc => config(doc, spacing: {line_spacing})
 
 #show raw: set text(size: {font_size})
 
@@ -118,6 +119,7 @@ def create_figure(code_block, i, output_dir):
 
 def insert_figure_in_latex(lines, code_block):
     code_block["options"].pop("fontsize", None)
+    code_block["options"].pop("linespacing", None)
     code_block["options"].pop("numbering", None)
 
     options = ",".join(
