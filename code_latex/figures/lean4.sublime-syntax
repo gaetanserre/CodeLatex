@@ -22,7 +22,12 @@ contexts:
       scope: storage.type.lean
     - match: '\battribute\b\s*\[[^\]]*\]'
       scope: storage.modifier.lean
-    - match: '@\[[^\]]*\]'
+    - match: '(@)(\[)([^\]]*)(\])'
+      captures:
+        1: storage.modifier.lean
+        2: storage.modifier.lean
+        3: storage.type.lean
+        4: storage.modifier.lean
     - match: '\(|\)|\[|\]|\{|\}|⦃|⦄'
       scope: keyword.control.import.lean
       scope: storage.modifier.lean
@@ -36,7 +41,7 @@ contexts:
       scope: keyword.other.command.lean
     - match: \b(?<!\.)(import|export|prelude|theory|definition|def|abbreviation|abbrev|instance|renaming|hiding|exposing|parameter|parameters|begin|constant|constants|lemma|variable|variables|theorem|example|open|axiom|inductive|coinductive|with|structure|universe|universes|alias|precedence|reserve|postfix|prefix|infix|infixl|infixr|notation|end|using|namespace|section|local|set_option|extends|include|omit|class|classes|instances|raw|run_cmd|restate_axiom|where)(?!\.)\b
       scope: keyword.other.lean
-    - match: \b(?<!\.)(calc|have|this|match|do|suffices|show|by|in|at|let|set|forall|fun|exists|assume|from|obtain|haveI|λ|rewrite|rw|exact|simp|simp_all|only|linarith|ring|intro|refine|by_cases|simp_rw|congr|ext|fun_prop|kernel_hom|cat_disch)(?!\.)\b
+    - match: \b(?<!\.)(calc|have|this|match|do|suffices|show|by|in|at|let|set|forall|fun|exists|assume|from|obtain|haveI|λ|rewrite|rw|exact|simp|simp_all|dsimp|only|linarith|ring|intro|refine|by_cases|simp_rw|congr|ext|fun_prop|cat_disch|monoidal|rfl|kernel_hom|hom_kernel|kernel_disch)(?!\.)\b
       scope: keyword.other.lean
     - match: «
       push:
