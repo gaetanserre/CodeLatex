@@ -41,7 +41,9 @@ contexts:
       scope: keyword.other.command.lean
     - match: \b(?<!\.)(import|export|prelude|theory|definition|def|abbreviation|abbrev|instance|renaming|hiding|exposing|parameter|parameters|begin|constant|constants|lemma|variable|variables|theorem|example|open|axiom|inductive|coinductive|with|structure|universe|universes|alias|precedence|reserve|postfix|prefix|infix|infixl|infixr|notation|end|using|namespace|section|local|set_option|extends|include|omit|class|classes|instances|raw|run_cmd|restate_axiom|where)(?!\.)\b
       scope: keyword.other.lean
-    - match: \b(?<!\.)(calc|have|this|match|do|suffices|show|by|in|at|let|set|forall|fun|exists|assume|from|obtain|haveI|λ|rewrite|rw|exact|simp|simp_all|dsimp|only|linarith|ring|intro|refine|by_cases|simp_rw|congr|ext|fun_prop|cat_disch|monoidal|rfl|kernel_hom|hom_kernel|kernel_disch)(?!\.)\b
+    - match: \b(?<!\.)(calc|have|this|match|do|suffices|show|by|in|at|let|set|forall|fun|exists|assume|from|obtain|haveI|λ|rewrite|rw|exact|simp|simp_all|dsimp|only|linarith|ring|intro|refine|by_cases|simp_rw|congr|ext|fun_prop|cat_disch|monoidal|rfl|kernel_hom|hom_kernel|kernel_disch|with_panel_widgets)(?!\.)\b
+      scope: keyword.other.lean
+    - match: \b(?<!\.)kernel_reassoc_of%
       scope: keyword.other.lean
     - match: «
       push:
